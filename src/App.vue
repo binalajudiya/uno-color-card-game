@@ -1,8 +1,8 @@
 <template>
   <div class="app">
 
-    <button class="btn btn-primary" v-if="gameState === 0" @click="startGame">Start Game</button>
-    <button class="btn btn-primary" v-if="gameState != 0" @click="resetGame">Reset Game</button>
+    <button class="btn btn-primary" v-if="gameState == 0" @click="startGame()">Start Game</button>
+    <button class="btn btn-primary" v-if="gameState != 0" @click="resetGame()">Reset Game</button>
 
     <div style="display: flex;justify-content: center;">
       <ColorCard 
@@ -141,6 +141,7 @@ export default {
     const startGame = () => {
       initializeGame();
       initializeGameCPU();
+      gameState.value = 1;
     }
 
     const resetGame = () => {
