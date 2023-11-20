@@ -1,8 +1,8 @@
 <template>
   <div class="app">
 
-    <button class="btn btn-primary" @click="startGame">Start Game</button>
-    <!-- <button class="btn btn-primary" @click="startGame">Reset Game</button> -->
+    <button class="btn btn-primary" v-if="gameState === 0" @click="startGame">Start Game</button>
+    <button class="btn btn-primary" v-if="gameState != 0" @click="resetGame">Reset Game</button>
 
     <div style="display: flex;justify-content: center;">
       <ColorCard 
@@ -40,6 +40,7 @@ export default {
     const cpuCards = ref([]);
     const deckTop = ref({}); // Top card of the deck
     const playerTurn = ref(true); // Player turn or CPU turn
+    const gameState = ref(0); // Game state
 
     // Crete Random Card Eveytime
     const drawRandomCard = () => {
@@ -93,6 +94,7 @@ export default {
       // Winner
       if (playerCards.value.length === 0 && cpuCards.value.length > 0) {
         alert('You Win');
+        gameState.value = 2;
         return;
       }
 
@@ -103,7 +105,6 @@ export default {
       }, 1000);
 
     }
-
 
     const cpuPlay = () => {
       let card = aiOptions.getNextCard(cpuCards.value, deckTop.value);
@@ -129,12 +130,12 @@ export default {
       // Winner
       if (cpuCards.value.length === 0 && playerCards.value.length > 0) {
         alert('CPU Win');
+        gameState.value = 2;
         return;
       }
 
       playerTurn.value = true;
     }
-
 
     // Button click of the Start Game
     const startGame = () => {
@@ -142,12 +143,21 @@ export default {
       initializeGameCPU();
     }
 
+    const resetGame = () => {
+      playerCards.value = [];
+      cpuCards.value = [];
+      deckTop.value = {};
+      playerTurn.value = true;
+    }
+
     return {
       startGame,
       playerCards,
       chooseCard,
       deckTop,
-      playerDrawCard
+      playerDrawCard,
+      resetGame,
+      gameState
     }
   }
 }
