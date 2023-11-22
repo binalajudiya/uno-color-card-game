@@ -94,7 +94,7 @@ export default {
       // Winner
       if (playerCards.value.length === 0 && cpuCards.value.length > 0) {
         alert('You Win');
-        gameState.value = 2;
+        resetGame();
         return;
       }
 
@@ -130,7 +130,7 @@ export default {
       // Winner
       if (cpuCards.value.length === 0 && playerCards.value.length > 0) {
         alert('CPU Win');
-        gameState.value = 2;
+        resetGame();
         return;
       }
 
@@ -145,6 +145,7 @@ export default {
     }
 
     const resetGame = () => {
+      console.log("Reset Game")
       playerCards.value = [];
       cpuCards.value = [];
       deckTop.value = {};
