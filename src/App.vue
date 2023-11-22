@@ -142,7 +142,7 @@ export default {
       playerCards.value = [];
       cpuCards.value = [];
       deckTop.value = {};
-      deckTop.value.color = null;
+      deckTop.value.color = "white";
       playerTurn.value = true;
       gameState.value = 0;
     }
