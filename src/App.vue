@@ -5,22 +5,14 @@
     <button class="btn btn-primary" v-if="gameState != 0" @click="resetGame()">Reset Game</button>
 
     <div style="display: flex;justify-content: center;">
-      <ColorCard 
-      class="card"
-      :color="deckTop.color"
-      :number="deckTop.number"
-      />
+      <ColorCard class="card" :color="deckTop.color" :number="deckTop.number" />
     </div>
 
-    <br><p><b>Your deck</b> <br> <button class="btn btn-primary" @click="playerDrawCard()">Draw new card</button></p>
-    <div class="deck" >
-      <ColorCard 
-        class="card" 
-        v-for="(card, index) in playerCards" 
-        :key="index" 
-        :color="card.color" 
-        :number="card.number" 
-        @click="chooseCard(card)"/>
+    <br>
+    <p><b>Your deck</b> <br> <button class="btn btn-primary" @click="playerDrawCard()">Draw new card</button></p>
+    <div class="deck">
+      <ColorCard class="card" v-for="(card, index) in playerCards" :key="index" :color="card.color" :number="card.number"
+        @click="chooseCard(card)" />
     </div>
   </div>
 </template>
@@ -69,7 +61,7 @@ export default {
 
     // Player Draw a card
     const playerDrawCard = () => {
-      if(playerCards.value.length == 0) return;
+      if (playerCards.value.length == 0) return;
       playerCards.value.push(drawRandomCard());
       playerTurn.value = false;
       setTimeout(() => {
@@ -80,7 +72,7 @@ export default {
     // Player to select the card
     const chooseCard = (card) => {
       // check valid card
-      if(!utils.nextCardIsValid(card, deckTop.value)) {
+      if (!utils.nextCardIsValid(card, deckTop.value)) {
         console.log('Invalid Card')
         return;
       }
@@ -110,16 +102,17 @@ export default {
       let card = aiOptions.getNextCard(cpuCards.value, deckTop.value);
       // console.log(card);
       // If no card found, draw a card
-      if(!card) {
-        if ( card === false ) {
+      if (!card) {
+        if (card === false) {
           alert('CPU Win');
+          resetGame();
           return;
         }
         cpuCards.push(drawRandomCard());
         alert('CPU draw a card');
         playerTurn.value = true;
         return;
-      } 
+      }
       deckTop.value = card;
 
       // Remove card from CPU deck
@@ -149,6 +142,7 @@ export default {
       playerCards.value = [];
       cpuCards.value = [];
       deckTop.value = {};
+      deckTop.value.color = null;
       playerTurn.value = true;
       gameState.value = 0;
     }
