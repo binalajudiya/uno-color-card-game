@@ -149,6 +149,7 @@ export default {
       cpuCards.value = [];
       deckTop.value = {};
       playerTurn.value = true;
+      gameState.value = 0;
     }
 
     return {
