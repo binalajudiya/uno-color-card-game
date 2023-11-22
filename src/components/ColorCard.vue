@@ -1,12 +1,21 @@
 <template>
-  <div :style="'background-color:'+color">
+  <div :style="colorStyle">
     <b class="cardelement">{{ number }}</b>
   </div>
 </template>
 
 <script>
+import { computed } from 'vue';
+
 export default {
-  props: ['color', 'number']
+  props: ['color', 'number'],
+  setup(props) {
+    const colorStyle = computed(() => {
+      return props.color ? { backgroundColor: props.color } : {}
+    })
+
+    return {colorStyle}
+  }
 }
 </script>
 

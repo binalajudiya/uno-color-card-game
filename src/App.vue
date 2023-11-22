@@ -5,7 +5,7 @@
     <button class="btn btn-primary" v-if="gameState != 0" @click="resetGame()">Reset Game</button>
 
     <div style="display: flex;justify-content: center;">
-      <ColorCard class="card" :color="deckTop.color" :number="deckTop.number" />
+      <ColorCard class="card" :color="deckTop.color" :number="deckTop.number"/>
     </div>
 
     <br>
@@ -138,11 +138,10 @@ export default {
     }
 
     const resetGame = () => {
-      console.log("Reset Game")
+      console.log("Reset Game");
       playerCards.value = [];
       cpuCards.value = [];
       deckTop.value = {};
-      deckTop.value.color = "white";
       playerTurn.value = true;
       gameState.value = 0;
     }
