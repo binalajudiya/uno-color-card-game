@@ -5,14 +5,14 @@
     <button class="btn btn-primary" v-if="gameState != 0" @click="resetGame()">Reset Game</button>
 
     <div style="display: flex;justify-content: center;">
-      <ColorCard class="card" :color="deckTop.color" :number="deckTop.number"/>
+      <ColorCard class="card" :color="deckTop.color" :number="deckTop.number" />
     </div>
 
     <br>
     <p><b>Your deck</b> <br> <button class="btn btn-primary" @click="playerDrawCard()">Draw new card</button></p>
     <div class="deck">
       <ColorCard class="card" v-for="(card, index) in playerCards" :key="index" :color="card.color" :number="card.number"
-        @click="chooseCard(card)" />
+        :special="card.special" @click="chooseCard(card)" />
     </div>
   </div>
 </template>
@@ -36,9 +36,23 @@ export default {
 
     // Crete Random Card Eveytime
     const drawRandomCard = () => {
-      return {
-        color: utils.cardColors[Math.floor(Math.random() * utils.cardColors.length)],
-        number: utils.cardNumbers[Math.floor(Math.random() * utils.cardNumbers.length)]
+      const specialCards = [null, "&#10228", "&#8634", "+2", "Wild", "+4"];
+      const isSpecial = Math.random() < 0.2; // 20% chance to draw a special card
+      const specialColor = "linear-gradient(135deg, hsla(56, 100%, 48%, 1) 0%, hsla(0, 100%, 50%, 1) 33%, hsla(213, 100%, 50%, 1) 67%, hsla(117, 100%, 50%, 1) 100%)";
+
+      if (isSpecial) {
+        return {
+          color: specialColor,
+          number: null,
+          special: specialCards[Math.floor(Math.random() * (specialCards.length - 1)) + 1] // Exclude null from special cards
+        }
+      }
+      else {
+        return {
+          color: utils.cardColors[Math.floor(Math.random() * utils.cardColors.length)],
+          number: utils.cardNumbers[Math.floor(Math.random() * utils.cardNumbers.length)],
+          special: null
+        };
       }
     }
 
@@ -47,6 +61,7 @@ export default {
       let tempCards = [];
       for (let i = 0; i <= 20; i++) {
         tempCards.push(drawRandomCard());
+        console.log(drawRandomCard())
       }
       playerCards.value = tempCards;
     }
@@ -69,8 +84,36 @@ export default {
       }, 1000);
     }
 
+    const playCard = (card) => {
+      if (card.special) {
+        switch (card.special) {
+          case "Skip":
+            playerTurn.value = false;
+            break;
+          case "Reverse":
+            playerTurn.value = !playerTurn.value;
+            break;
+          case "Draw Two":
+            playerTurn.value = false;
+            cpuCards.push(drawRandomCard());
+            cpuCards.push(drawRandomCard());
+            break;
+          case "Wild":
+            break;
+          case "Wild Draw Four":
+            break;
+        }
+      }
+    }
+
     // Player to select the card
     const chooseCard = (card) => {
+
+      /* if (card.special) {
+        playCard(card);
+        return;
+      } */
+
       // check valid card
       if (!utils.nextCardIsValid(card, deckTop.value)) {
         console.log('Invalid Card')
@@ -184,6 +227,9 @@ export default {
   height: 150px;
   margin: 0.5rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .align-center {
