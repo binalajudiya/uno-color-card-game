@@ -40,20 +40,20 @@ export default {
       const isSpecial = Math.random() < 0.2; // 20% chance to draw a special card
       const specialColor = "linear-gradient(135deg, hsla(56, 100%, 48%, 1) 0%, hsla(0, 100%, 50%, 1) 33%, hsla(213, 100%, 50%, 1) 67%, hsla(117, 100%, 50%, 1) 100%)";
 
-      if (isSpecial) {
+      /* if (isSpecial) {
         return {
           color: specialColor,
           number: null,
           special: specialCards[Math.floor(Math.random() * (specialCards.length - 1)) + 1] // Exclude null from special cards
         }
       }
-      else {
+      else { */
         return {
           color: utils.cardColors[Math.floor(Math.random() * utils.cardColors.length)],
           number: utils.cardNumbers[Math.floor(Math.random() * utils.cardNumbers.length)],
-          special: null
+          //special: null
         };
-      }
+     // }
     }
 
     // Initialize the game
