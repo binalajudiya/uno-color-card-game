@@ -1,7 +1,7 @@
 <template>
   <div :style="colorStyle">
     <b class="cardelement" v-if="number">{{ number }}</b>
-    <b class="cardelement cardselement" v-if="special" v-html="special"></b>
+    <!-- <b class="cardelement cardselement" v-if="special" v-html="special"></b> -->
   </div>
 </template>
 
