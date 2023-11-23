@@ -9,7 +9,7 @@
 import { computed } from 'vue';
 
 export default {
-  props: ['color', 'number', 'special'],
+  props: ['color', 'number'],
   setup(props) {
     const colorStyle = computed(() => {
       return props.color ? { background: props.color } : {}
