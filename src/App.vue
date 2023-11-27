@@ -153,7 +153,7 @@ export default {
       // If no card found, draw a card
       if (!card) {
         if (card === false) {
-          // alert('CPU Win');
+          alert('CPU Win');
           console.log('CPU Win');
           resetGame();
           return;
