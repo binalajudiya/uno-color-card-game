@@ -5,7 +5,7 @@
     <button class="btn btn-primary" v-if="gameState != 0" @click="resetGame()">Reset Game</button>
 
     <div style="display: flex;justify-content: center;">
-      <ColorCard class="card" :color="deckTop.color" :number="deckTop.number" :special="deckTop.special"/>
+      <ColorCard class="card" :color="deckTop.color" :number="deckTop.number" :special="deckTop.special" />
     </div>
 
     <br>
@@ -78,10 +78,12 @@ export default {
     const playerDrawCard = () => {
       if (playerCards.value.length == 0) return;
       playerCards.value.push(drawRandomCard());
-      playerTurn.value = false;
-      setTimeout(() => {
-        // cpuPlay();
-      }, 1000);
+      if (!deckTop.value) {
+        playerTurn.value = false;
+        setTimeout(() => {
+          cpuPlay();
+        }, 1000);
+      }
     }
 
     const playCard = (card) => {
@@ -112,10 +114,9 @@ export default {
 
     // Player to select the card
     const chooseCard = (card) => {
-
+      
       if (card.special) {
         playCard(card);
-
       } else {
         // check valid card
         if (!utils.nextCardIsValid(card, deckTop.value)) {
@@ -138,7 +139,7 @@ export default {
 
       playerTurn.value = false;
       deckTop.value = card;
-      console.log(deckTop.value)
+      // console.log(deckTop.value)
 
       setTimeout(() => {
         cpuPlay();
@@ -148,7 +149,7 @@ export default {
 
     const cpuPlay = () => {
       let card = aiOptions.getNextCard(cpuCards.value, deckTop.value);
-      // console.log(card);
+      
       // If no card found, draw a card
       if (!card) {
         if (card === false) {
@@ -161,6 +162,10 @@ export default {
         alert('CPU draw a card');
         playerTurn.value = true;
         return;
+      } else {
+        if(card.special) {
+          playCard(card);
+        }
       }
       deckTop.value = card;
 
