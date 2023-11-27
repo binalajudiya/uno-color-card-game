@@ -5,7 +5,7 @@
     <button class="btn btn-primary" v-if="gameState != 0" @click="resetGame()">Reset Game</button>
 
     <div style="display: flex;justify-content: center;">
-      <ColorCard class="card" :color="deckTop.color" :number="deckTop.number" />
+      <ColorCard class="card" :color="deckTop.color" :number="deckTop.number" :special="deckTop.special"/>
     </div>
 
     <br>
@@ -40,20 +40,20 @@ export default {
       const isSpecial = Math.random() < 0.2; // 20% chance to draw a special card
       const specialColor = "linear-gradient(135deg, hsla(56, 100%, 48%, 1) 0%, hsla(0, 100%, 50%, 1) 33%, hsla(213, 100%, 50%, 1) 67%, hsla(117, 100%, 50%, 1) 100%)";
 
-      /* if (isSpecial) {
+      if (isSpecial) {
         return {
           color: specialColor,
           number: null,
           special: specialCards[Math.floor(Math.random() * (specialCards.length - 1)) + 1] // Exclude null from special cards
         }
       }
-      else { */
+      else {
         return {
           color: utils.cardColors[Math.floor(Math.random() * utils.cardColors.length)],
           number: utils.cardNumbers[Math.floor(Math.random() * utils.cardNumbers.length)],
-          //special: null
+          special: null
         };
-     // }
+      }
     }
 
     // Initialize the game
@@ -61,7 +61,7 @@ export default {
       let tempCards = [];
       for (let i = 0; i <= 20; i++) {
         tempCards.push(drawRandomCard());
-        console.log(drawRandomCard())
+        // console.log(drawRandomCard())
       }
       playerCards.value = tempCards;
     }
@@ -80,27 +80,31 @@ export default {
       playerCards.value.push(drawRandomCard());
       playerTurn.value = false;
       setTimeout(() => {
-        cpuPlay();
+        // cpuPlay();
       }, 1000);
     }
 
     const playCard = (card) => {
+      // console.log(card.special)
       if (card.special) {
         switch (card.special) {
-          case "Skip":
+          case "&#10228":
             playerTurn.value = false;
             break;
-          case "Reverse":
+          case "&#8634":
             playerTurn.value = !playerTurn.value;
             break;
-          case "Draw Two":
-            playerTurn.value = false;
-            cpuCards.push(drawRandomCard());
-            cpuCards.push(drawRandomCard());
+          case "+2":
+            playerDrawCard();
+            playerDrawCard();
             break;
           case "Wild":
             break;
-          case "Wild Draw Four":
+          case "+4":
+            playerDrawCard();
+            playerDrawCard();
+            break;
+          case null:
             break;
         }
       }
@@ -109,17 +113,16 @@ export default {
     // Player to select the card
     const chooseCard = (card) => {
 
-      /* if (card.special) {
+      if (card.special) {
         playCard(card);
-        return;
-      } */
 
-      // check valid card
-      if (!utils.nextCardIsValid(card, deckTop.value)) {
-        console.log('Invalid Card')
-        return;
+      } else {
+        // check valid card
+        if (!utils.nextCardIsValid(card, deckTop.value)) {
+          console.log('Invalid Card')
+          return;
+        }
       }
-      deckTop.value = card;
 
       // Remove card from player deck
       playerCards.value = playerCards.value.filter((item) => {
@@ -134,6 +137,8 @@ export default {
       }
 
       playerTurn.value = false;
+      deckTop.value = card;
+      console.log(deckTop.value)
 
       setTimeout(() => {
         cpuPlay();
@@ -147,7 +152,8 @@ export default {
       // If no card found, draw a card
       if (!card) {
         if (card === false) {
-          alert('CPU Win');
+          // alert('CPU Win');
+          console.log('CPU Win');
           resetGame();
           return;
         }
@@ -166,6 +172,7 @@ export default {
       // Winner
       if (cpuCards.value.length === 0 && playerCards.value.length > 0) {
         alert('CPU Win');
+        console.log('CPU Win');
         resetGame();
         return;
       }
