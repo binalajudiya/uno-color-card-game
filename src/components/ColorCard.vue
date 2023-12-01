@@ -1,7 +1,6 @@
 <template>
   <div :style="colorStyle">
     <b class="cardelement" v-if="number">{{ number }}</b>
-    <b class="cardelement cardselement" v-if="special" v-html="special"></b>
   </div>
 </template>
 
@@ -9,7 +8,7 @@
 import { computed } from 'vue';
 
 export default {
-  props: ['color', 'number', 'special'],
+  props: ['color', 'number'],
   setup(props) {
     const colorStyle = computed(() => {
       return props.color ? { background: props.color } : {}
