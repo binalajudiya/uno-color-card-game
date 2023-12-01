@@ -68,12 +68,10 @@ export default {
     const playerDrawCard = () => {
       if (playerCards.value.length == 0) return;
       playerCards.value.push(drawRandomCard());
-      if (!deckTop.value) {
-        playerTurn.value = false;
-        setTimeout(() => {
-          cpuPlay();
-        }, 1000);
-      }
+      playerTurn.value = false;
+      setTimeout(() => {
+        cpuPlay();
+      }, 1000);
     }
 
     /* const playCard = (card) => {
@@ -148,7 +146,7 @@ export default {
         alert('CPU draw a card');
         playerTurn.value = true;
         return;
-      } 
+      }
       deckTop.value = card;
 
       // Remove card from CPU deck
