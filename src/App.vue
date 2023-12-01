@@ -1,6 +1,11 @@
 <template>
   <div class="app">
 
+    <div class="deck">
+      <ColorCard class="card" v-for="(card, index) in cpuCards" :key="index" :color="card.color" :number="card.number"
+        :special="card.special" @click="chooseCard(card)" />
+    </div>
+
     <button class="btn btn-primary" v-if="gameState == 0" @click="startGame()">Start Game</button>
     <button class="btn btn-primary" v-if="gameState != 0" @click="resetGame()">Reset Game</button>
 
@@ -136,12 +141,12 @@ export default {
 
       // If no card found, draw a card
       if (!card) {
-        if (card === false) {
+        /* if (card === false) {
           alert('CPU Win');
           console.log('CPU Win');
           resetGame();
           return;
-        }
+        } */
         cpuCards.push(drawRandomCard());
         alert('CPU draw a card');
         playerTurn.value = true;
@@ -184,6 +189,7 @@ export default {
     return {
       startGame,
       playerCards,
+      cpuCards,
       chooseCard,
       deckTop,
       playerDrawCard,
