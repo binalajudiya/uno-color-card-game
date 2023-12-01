@@ -148,11 +148,7 @@ export default {
         alert('CPU draw a card');
         playerTurn.value = true;
         return;
-      } else {
-        if (card.special) {
-          playCard(card);
-        }
-      }
+      } 
       deckTop.value = card;
 
       // Remove card from CPU deck
