@@ -76,7 +76,7 @@ export default {
       }
     }
 
-    const playCard = (card) => {
+    /* const playCard = (card) => {
       // console.log(card.special)
       if (card.special) {
         switch (card.special) {
@@ -100,7 +100,7 @@ export default {
             break;
         }
       }
-    }
+    } */
 
     // Player to select the card
     const chooseCard = (card) => {
