@@ -147,7 +147,7 @@ export default {
           resetGame();
           return;
         } */
-        cpuCards.push(drawRandomCard());
+        cpuCards.value.push(drawRandomCard());
         alert('CPU draw a card');
         playerTurn.value = true;
         return;
