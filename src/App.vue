@@ -36,9 +36,9 @@ export default {
 
     // Crete Random Card Eveytime
     const drawRandomCard = () => {
-      const specialCards = [null, "&#10228", "&#8634", "+2", "Wild", "+4"];
+      /* const specialCards = [null, "&#10228", "&#8634", "+2", "Wild", "+4"];
       const isSpecial = Math.random() < 0.2; // 20% chance to draw a special card
-      const specialColor = "linear-gradient(135deg, hsla(56, 100%, 48%, 1) 0%, hsla(0, 100%, 50%, 1) 33%, hsla(213, 100%, 50%, 1) 67%, hsla(117, 100%, 50%, 1) 100%)";
+      const specialColor = "linear-gradient(135deg, hsla(56, 100%, 48%, 1) 0%, hsla(0, 100%, 50%, 1) 33%, hsla(213, 100%, 50%, 1) 67%, hsla(117, 100%, 50%, 1) 100%)"; */
 
       return {
         color: utils.cardColors[Math.floor(Math.random() * utils.cardColors.length)],
