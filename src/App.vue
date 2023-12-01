@@ -1,10 +1,10 @@
 <template>
   <div class="app">
 
-    <div class="deck">
+    <!-- <div class="deck">
       <ColorCard class="card" v-for="(card, index) in cpuCards" :key="index" :color="card.color" :number="card.number"
         :special="card.special" @click="chooseCard(card)" />
-    </div>
+    </div> -->
 
     <button class="btn btn-primary" v-if="gameState == 0" @click="startGame()">Start Game</button>
     <button class="btn btn-primary" v-if="gameState != 0" @click="resetGame()">Reset Game</button>
