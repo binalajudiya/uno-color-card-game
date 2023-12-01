@@ -40,20 +40,10 @@ export default {
       const isSpecial = Math.random() < 0.2; // 20% chance to draw a special card
       const specialColor = "linear-gradient(135deg, hsla(56, 100%, 48%, 1) 0%, hsla(0, 100%, 50%, 1) 33%, hsla(213, 100%, 50%, 1) 67%, hsla(117, 100%, 50%, 1) 100%)";
 
-      if (isSpecial) {
-        return {
-          color: specialColor,
-          number: null,
-          special: specialCards[Math.floor(Math.random() * (specialCards.length - 1)) + 1] // Exclude null from special cards
-        }
-      }
-      else {
-        return {
-          color: utils.cardColors[Math.floor(Math.random() * utils.cardColors.length)],
-          number: utils.cardNumbers[Math.floor(Math.random() * utils.cardNumbers.length)],
-          special: null
-        };
-      }
+      return {
+        color: utils.cardColors[Math.floor(Math.random() * utils.cardColors.length)],
+        number: utils.cardNumbers[Math.floor(Math.random() * utils.cardNumbers.length)]
+      };
     }
 
     // Initialize the game
@@ -114,15 +104,11 @@ export default {
 
     // Player to select the card
     const chooseCard = (card) => {
-      
-      if (card.special) {
-        playCard(card);
-      } else {
-        // check valid card
-        if (!utils.nextCardIsValid(card, deckTop.value)) {
-          console.log('Invalid Card')
-          return;
-        }
+
+      // check valid card
+      if (!utils.nextCardIsValid(card, deckTop.value)) {
+        console.log('Invalid Card')
+        return;
       }
 
       // Remove card from player deck
@@ -149,7 +135,7 @@ export default {
 
     const cpuPlay = () => {
       let card = aiOptions.getNextCard(cpuCards.value, deckTop.value);
-      
+
       // If no card found, draw a card
       if (!card) {
         if (card === false) {
@@ -163,7 +149,7 @@ export default {
         playerTurn.value = true;
         return;
       } else {
-        if(card.special) {
+        if (card.special) {
           playCard(card);
         }
       }
